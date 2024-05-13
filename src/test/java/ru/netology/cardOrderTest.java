@@ -10,12 +10,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class cardOrderTest {
-    private static WebDriver driver;
+    private WebDriver driver;
 
     @BeforeAll
     static void setupAll() {
@@ -39,14 +38,14 @@ public class cardOrderTest {
 
     @Test
     void test() {
-        driver.get("http://localhost:9999");
-        WebElement from = driver.findElement(By.cssSelector("[class]from"));
-        from.findElement(By.cssSelector("[data-test-id=agreement]")).click();
-        from.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Петров Андрей Максимович");
-        from.findElement(By.cssSelector("[data-test-id=phone]")).sendKeys("+79999668372");
-        from.findElement(By.cssSelector("[type=button]")).click();
-        String text = from.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
-        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
+        driver.get("http://localhost:9999/");
+        driver.findElement(By.cssSelector("[data-test-id ='name'] input")).sendKeys("Петров Андрей Максимович");
+        driver.findElement(By.cssSelector("[data-test-id ='phone'] input")).sendKeys("+79999668372");
+        driver.findElement(By.cssSelector("[data-test-id ='agreement']")).click();
+        driver.findElement(By.className("button")).click();
+        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id = order-success]")).getText().trim();
+        assertEquals(expected, actual);
     }
 
 }
