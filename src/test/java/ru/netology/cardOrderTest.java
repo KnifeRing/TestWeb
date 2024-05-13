@@ -41,10 +41,12 @@ public class cardOrderTest {
     void test() {
         driver.get("http://localhost:9999");
         WebElement from = driver.findElement(By.cssSelector("[class]from"));
+        from.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        from.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Петров Андрей Максимович");
+        from.findElement(By.cssSelector("[data-test-id=phone]")).sendKeys("+79999668372");
         from.findElement(By.cssSelector("[type=button]")).click();
-        from.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys();
         String text = from.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
-        assertEquals("", text.trim());
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
     }
 
 }
