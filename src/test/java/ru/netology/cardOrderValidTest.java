@@ -50,10 +50,10 @@ public class cardOrderValidTest {
     @Test
     void shouldInvalidPhone() {
         driver.findElement(By.cssSelector("[data-test-id = name] input")).sendKeys("Петров Андрей Максимович");
-        driver.findElement(By.cssSelector("[data-test-id = phone] input")).sendKeys("+79999668372267777");
+        driver.findElement(By.cssSelector("[data-test-id = phone] input")).sendKeys("+79999668372267");
         driver.findElement(By.cssSelector("[data-test-id = agreement]")).click();
         driver.findElement(By.className("button")).click();
-        String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +70000000000.";
+        String expected = "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.";
         String actual = driver.findElement(By.cssSelector("[data-test-id = phone].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
