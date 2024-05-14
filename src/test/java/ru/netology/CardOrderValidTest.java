@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class cardOrderValidTest {
+public class CardOrderValidTest {
     private WebDriver driver;
 
     @BeforeAll
@@ -46,7 +46,26 @@ public class cardOrderValidTest {
         String actual = driver.findElement(By.cssSelector("[data-test-id = name].input_invalid .input__sub")).getText().trim();
         assertEquals(expected, actual);
     }
-
+    @Test
+    void shouldNegativeName() {
+        driver.findElement(By.cssSelector("[data-test-id = name] input")).sendKeys("Petrov Andrey Maximovich");
+        driver.findElement(By.cssSelector("[data-test-id = phone] input")).sendKeys("+79999668372");
+        driver.findElement(By.cssSelector("[data-test-id = agreement]")).click();
+        driver.findElement(By.className("button")).click();
+        String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id = name].input_invalid .input__sub")).getText().trim();
+        assertEquals(expected, actual);
+    }
+    @Test
+    void shouldNegativeNumberName() {
+        driver.findElement(By.cssSelector("[data-test-id = name] input")).sendKeys("123 213 412");
+        driver.findElement(By.cssSelector("[data-test-id = phone] input")).sendKeys("+79999668372");
+        driver.findElement(By.cssSelector("[data-test-id = agreement]")).click();
+        driver.findElement(By.className("button")).click();
+        String expected = "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id = name].input_invalid .input__sub")).getText().trim();
+        assertEquals(expected, actual);
+    }
     @Test
     void shouldInvalidPhone() {
         driver.findElement(By.cssSelector("[data-test-id = name] input")).sendKeys("Петров Андрей Максимович");
@@ -59,7 +78,7 @@ public class cardOrderValidTest {
     }
 
     @Test
-    void shoulPhoneNull() {
+    void shouldPhoneNull() {
         driver.findElement(By.cssSelector("[data-test-id = name] input")).sendKeys("Петров Андрей Максимович");
         driver.findElement(By.cssSelector("[data-test-id = phone] input")).clear();
         driver.findElement(By.cssSelector("[data-test-id = agreement]")).click();
